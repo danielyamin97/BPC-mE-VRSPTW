@@ -141,7 +141,9 @@ public final class Master extends AbstractMaster<EVRPTW, Route, PricingProblem, 
 				if(dual<0) {
 					SRCToConsider.add(subsetRowInequality);
 					dualsSRC[s] = dual;
-					for(int i: subsetRowInequality.cutSet) dataModel.vertices[i].SRCIndices.add(s);
+					for(int i: subsetRowInequality.cutSet) {
+						dataModel.vertices[i].SRCIndices.add(s);
+					}
 					s++;
 				}
 			}

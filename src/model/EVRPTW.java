@@ -24,7 +24,7 @@ import columnGeneration.Label;
 
 /**
  * The Electric Vehicle Routing and Overnight Charging Scheduling Problem on a Multigraph
- * @author Daniel Yamín (Universidad de los Andes)
+ * @author Daniel Yamï¿½n (Universidad de los Andes)
  */
 
 public final class EVRPTW implements ModelInterface {
@@ -161,14 +161,6 @@ public final class EVRPTW implements ModelInterface {
 				vertices[i].neighbors.add(i); //does not count for the Delta
 			}
 
-			/** (A priori) unreachable customers **/
-			for (int i = 1; i <= this.C; i++) {
-				for (int j = 1; j <= this.C; j++) {
-					if(i!=j && !graph.containsEdge(i, j))
-						vertices[j].unreachable.add(i); //backward labeling
-				}
-			}
-
 			/** Charging time vertices **/
 			graph.addVertex(this.V); //fictitious source
 			vertices[this.V] = new Vertex(this.V, 0, vertices[0].opening_tw, vertices[0].closing_tw);
@@ -297,7 +289,6 @@ public final class EVRPTW implements ModelInterface {
 		public int load; 								//load of the vertex
 		public int opening_tw; 							//opening time window
 		public int closing_tw; 							//closing time window
-		public HashSet<Integer> unreachable; 			//(a priori) unreachable customers from this vertex
 		public HashSet<Integer> neighbors; 				//neighbors of the vertex 
 		public ArrayList<Integer> SRCIndices; 			//indices of the SRC containing this vertex
 		public ArrayList<Label> processedLabels; 		//labels that have reached the vertex and are non-dominated
@@ -315,7 +306,6 @@ public final class EVRPTW implements ModelInterface {
 			this.load = load;
 			this.opening_tw = opening_tw;
 			this.closing_tw = closing_tw;
-			this.unreachable = new HashSet<Integer>(C);
 			int auxNumArcs = 2*(V*V-V);
 			this.processedLabels = new ArrayList<Label>(auxNumArcs);
 			this.unprocessedLabels = new PriorityQueue<Label>(auxNumArcs, new Label.SortLabels());
