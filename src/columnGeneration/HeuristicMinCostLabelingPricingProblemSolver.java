@@ -27,7 +27,7 @@ public final class HeuristicMinCostLabelingPricingProblemSolver extends Abstract
 	public Vertex[] vertices = dataModel.vertices; 			//vertices of the instance
 	public PriorityQueue<Vertex> nodesToProcess; 			//labels that need be processed
 	public final int numCols = 400; 						//maximum number of routes (columns) allowed
-	public boolean[] infeasibleArcs; 						//arcs that cannot be used by branching
+	public int[] infeasibleArcs; 						//arcs that cannot be used by branching
 	public final int similarityThreshold = 5; 				//diversification of columns
 
 
@@ -37,7 +37,7 @@ public final class HeuristicMinCostLabelingPricingProblemSolver extends Abstract
 	public HeuristicMinCostLabelingPricingProblemSolver(EVRPTW dataModel, PricingProblem pricingProblem) {
 		super(dataModel, pricingProblem);
 		this.name="ExactLabelingSolver"; //Set a name for the solver
-		this.infeasibleArcs = new boolean[dataModel.numArcs];
+		this.infeasibleArcs = new int[dataModel.numArcs];
 		this.nodesToProcess = new PriorityQueue<Vertex>(dataModel.V, new SortVertices());
 	}
 
@@ -62,7 +62,7 @@ public final class HeuristicMinCostLabelingPricingProblemSolver extends Abstract
 				else {currentLabel.index = vertices[currentLabel.vertex].processedLabels.size(); vertices[currentLabel.vertex].processedLabels.add(currentLabel);}
 				for(Arc a: dataModel.graph.incomingEdgesOf(currentLabel.vertex)) {
 					if(a.head>0 && a.head<=dataModel.C+1 && !a.minCostAlternative) continue;
-					if(infeasibleArcs[a.id]) continue;
+					if(infeasibleArcs[a.id]==0) continue;
 					Label extendedLabel;
 					if(a.tail<=dataModel.C) extendedLabel = extendLabel(currentLabel, a);
 					else extendedLabel = extendLabelChargingTime(currentLabel, a);
@@ -431,10 +431,10 @@ public final class HeuristicMinCostLabelingPricingProblemSolver extends Abstract
 	public void branchingDecisionPerformed(BranchingDecision bd) {
 		if(bd instanceof FixArc) { 			//Fixing one arc
 			FixArc fixArcDecision = (FixArc) bd;
-			for(int infeasibleArc: fixArcDecision.infeasibleArcs) this.infeasibleArcs[infeasibleArc] = true;
+			for(int infeasibleArc: fixArcDecision.infeasibleArcs) this.infeasibleArcs[infeasibleArc] ++;
 		}else if(bd instanceof RemoveArc) {//Removing one arc
 			RemoveArc removeArcDecision= (RemoveArc) bd;
-			infeasibleArcs[removeArcDecision.arc] = true;
+			infeasibleArcs[removeArcDecision.arc] ++;
 		}
 	}
 
@@ -446,10 +446,10 @@ public final class HeuristicMinCostLabelingPricingProblemSolver extends Abstract
 	public void branchingDecisionReversed(BranchingDecision bd) {
 		if(bd instanceof FixArc) { 			//Fixing one arc
 			FixArc fixArcDecision = (FixArc) bd;
-			for(int infeasibleArc: fixArcDecision.infeasibleArcs) this.infeasibleArcs[infeasibleArc] = false;
+			for(int infeasibleArc: fixArcDecision.infeasibleArcs) this.infeasibleArcs[infeasibleArc] --;
 		}else if(bd instanceof RemoveArc) {//Removing one arc
 			RemoveArc removeArcDecision= (RemoveArc) bd;
-			infeasibleArcs[removeArcDecision.arc] = false;
+			infeasibleArcs[removeArcDecision.arc] --;
 		}
 	}
 

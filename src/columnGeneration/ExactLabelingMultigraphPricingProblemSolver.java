@@ -25,7 +25,7 @@ public final class ExactLabelingMultigraphPricingProblemSolver extends AbstractP
 	public Vertex[] vertices = dataModel.vertices; 		//vertices of the instance
 	public PriorityQueue<Vertex> nodesToProcess; 		//labels that need be processed
 	public final int numCols = 400; 					//maximum number of routes (columns) allowed
-	public boolean[] infeasibleArcs; 					//arcs that cannot be used by branching
+	public int[] infeasibleArcs; 					//arcs that cannot be used by branching
 	public final int similarityThreshold = 5; 			//diversification of columns
 
 
@@ -35,7 +35,7 @@ public final class ExactLabelingMultigraphPricingProblemSolver extends AbstractP
 	public ExactLabelingMultigraphPricingProblemSolver(EVRPTW dataModel, PricingProblem pricingProblem) {
 		super(dataModel, pricingProblem);
 		this.name="ExactLabelingSolver";
-		this.infeasibleArcs = new boolean[dataModel.numArcs];
+		this.infeasibleArcs = new int[dataModel.numArcs];
 		this.nodesToProcess = new PriorityQueue<Vertex>(dataModel.V, new SortVertices());
 	}
 
@@ -59,7 +59,7 @@ public final class ExactLabelingMultigraphPricingProblemSolver extends AbstractP
 				if(isDominated) continue;
 				else {currentLabel.index = vertices[currentLabel.vertex].processedLabels.size(); vertices[currentLabel.vertex].processedLabels.add(currentLabel);}
 				for(Arc a: dataModel.graph.incomingEdgesOf(currentLabel.vertex)) {
-					if(infeasibleArcs[a.id]) continue;
+					if(infeasibleArcs[a.id]==0) continue;
 					Label extendedLabel;
 					if(a.tail<=dataModel.C) extendedLabel = extendLabel(currentLabel, a);
 					else extendedLabel = extendLabelChargingTime(currentLabel, a);
@@ -453,10 +453,10 @@ public final class ExactLabelingMultigraphPricingProblemSolver extends AbstractP
 	public void branchingDecisionPerformed(BranchingDecision bd) {
 		if(bd instanceof FixArc) { //Fixing one arc
 			FixArc fixArcDecision = (FixArc) bd;
-			for(int infeasibleArc: fixArcDecision.infeasibleArcs) this.infeasibleArcs[infeasibleArc] = true;
+			for(int infeasibleArc: fixArcDecision.infeasibleArcs) this.infeasibleArcs[infeasibleArc] ++;
 		}else if(bd instanceof RemoveArc) {//Removing one arc
 			RemoveArc removeArcDecision= (RemoveArc) bd;
-			infeasibleArcs[removeArcDecision.arc] = true;
+			infeasibleArcs[removeArcDecision.arc] ++;
 		}
 	}
 
@@ -468,10 +468,10 @@ public final class ExactLabelingMultigraphPricingProblemSolver extends AbstractP
 	public void branchingDecisionReversed(BranchingDecision bd) {
 		if(bd instanceof FixArc) { //Fixing one arc
 			FixArc fixArcDecision = (FixArc) bd;
-			for(int infeasibleArc: fixArcDecision.infeasibleArcs) this.infeasibleArcs[infeasibleArc] = false;
+			for(int infeasibleArc: fixArcDecision.infeasibleArcs) this.infeasibleArcs[infeasibleArc] --;
 		}else if(bd instanceof RemoveArc) {//Removing one arc
 			RemoveArc removeArcDecision= (RemoveArc) bd;
-			infeasibleArcs[removeArcDecision.arc] = false;
+			infeasibleArcs[removeArcDecision.arc] --;
 		}
 	}
 
