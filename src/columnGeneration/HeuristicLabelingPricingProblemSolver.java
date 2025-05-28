@@ -57,7 +57,7 @@ public final class HeuristicLabelingPricingProblemSolver extends AbstractPricing
 				else {currentLabel.index = vertices[currentLabel.vertex].processedLabels.size(); vertices[currentLabel.vertex].processedLabels.add(currentLabel);}
 				for(Arc a: dataModel.graph.incomingEdgesOf(currentLabel.vertex)) {
 					if(a.head>0 && a.head<=dataModel.C+1 && !a.minCostAlternative) continue;
-					if(infeasibleArcs[a.id]==0) continue;
+					if(infeasibleArcs[a.id] > 0) continue;
 					Label extendedLabel;
 					if(a.tail<=dataModel.C) extendedLabel = extendLabel(currentLabel, a);
 					else extendedLabel = extendLabelChargingTime(currentLabel, a);
