@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -176,6 +177,8 @@ public final class EVRPTW implements ModelInterface {
 					graph.addEdge(this.V+t, this.V+t+1, newArc); arcs[this.numArcs] = newArc; this.numArcs++;
 				}
 			}
+		   // Resize arcs[] to match the number of feasible arcs
+            arcs = Arrays.copyOf(arcs, this.numArcs);
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
