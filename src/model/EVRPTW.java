@@ -59,7 +59,6 @@ public final class EVRPTW implements ModelInterface {
 	public long heuristicPricingTime = 0; 					//time spent on the heuristic labeling algorithm
 	public int columnsRootNode = 0; 						//columns generated at the root node
 	public int cutsRootNode = 0; 							//cuts separated at the root node
-	public int[] infeasibleArcs; 							//infeasible arcs in the pricing problem
 
 
 	/**

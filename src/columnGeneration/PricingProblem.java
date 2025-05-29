@@ -16,8 +16,10 @@ public final class PricingProblem extends AbstractPricingProblem<EVRPTW> {
 	public Set<ChargingTimeInequality> branchesOnChargingTimes;			//branching on charging times
 	public double bestReducedCost = -Double.MAX_VALUE; 					//best reduced cost found by the exact labeling
 	public double reducedCostThreshold = 0; 							//minimum reduced cost when arriving at the depot source
+	public int[] infeasibleArcs; 										//arcs that cannot be used by branching
 
 	public PricingProblem(EVRPTW modelData, String name) {
 		super(modelData, name);
+		this.infeasibleArcs = new int[dataModel.numArcs];
 	}
 }

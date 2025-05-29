@@ -36,11 +36,11 @@ public final class FixArc implements BranchingDecision<EVRPTW,Route> {
 		int head = dataModel.arcs[arc].head;
 		if(tail>0) { //i is a customer
 			for(Arc otherArc: dataModel.graph.outgoingEdgesOf(tail)) 
-				if(otherArc.id!=arc && dataModel.infeasibleArcs[otherArc.id]==0) infeasibleArcs.add(otherArc.id);
+				if(otherArc.id!=arc && pricingProblem.infeasibleArcs[otherArc.id]==0) infeasibleArcs.add(otherArc.id);
 		}
 		if(head<dataModel.C+1) { //j is a customer
 			for(Arc otherArc: dataModel.graph.incomingEdgesOf(head)) 
-				if(otherArc.id!=arc && dataModel.infeasibleArcs[otherArc.id]==0) infeasibleArcs.add(otherArc.id);
+				if(otherArc.id!=arc && pricingProblem.infeasibleArcs[otherArc.id]==0) infeasibleArcs.add(otherArc.id);
 		}
 	}
 
