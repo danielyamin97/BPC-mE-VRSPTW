@@ -1,6 +1,6 @@
 # The Electric Vehicle Routing and Overnight Charging Scheduling Problem on a Multigraph
 
-This is the actively developed project repository of the software and data that were used in the the research reported in the paper 
+This is the actively developed project repository of the software and data that were used in the research reported in the paper 
 [The Electric Vehicle Routing and Overnight Charging Scheduling Problem on a Multigraph](https://doi.org/10.1287/ijoc.2023.0404) by Daniel Yamín, Guy Desaulniers, and Jorge E. Mendoza.
 
 Last Update: 05/2025. 
