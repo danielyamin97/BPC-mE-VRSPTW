@@ -1,11 +1,9 @@
 # The Electric Vehicle Routing and Overnight Charging Scheduling Problem on a Multigraph
 
-This archive is distributed in association with the [INFORMS Journal on
-Computing](https://pubsonline.informs.org/journal/ijoc) under the [MIT License](LICENSE).
-
-The software and data in this repository are a snapshot of the software and data
-that were used in the research reported on in the paper 
+This is the actively developed project repository of the software and data that were used in the the research reported in the paper 
 [The Electric Vehicle Routing and Overnight Charging Scheduling Problem on a Multigraph](https://doi.org/10.1287/ijoc.2023.0404) by Daniel Yamín, Guy Desaulniers, and Jorge E. Mendoza.
+
+Last Update: 05/2025. 
 
 ## Cite
 
