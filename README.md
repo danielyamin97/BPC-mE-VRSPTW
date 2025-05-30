@@ -5,30 +5,6 @@ This is the actively developed project repository of the software and data that 
 
 Last Update: 05/2025. 
 
-## Cite
-
-To cite the contents of this repository, please cite both the paper and this repo, using their respective DOIs.
-
-https://doi.org/10.1287/ijoc.2023.0404
-
-
-
-https://doi.org/10.1287/ijoc.2023.0404.cd
-
-Below is the BibTex for citing this snapshot of the repository.
-
-```
-@misc{yamin2024electric,
-  author =        {Yam{\'i}n, Daniel and Desaulniers, Guy and Mendoza, Jorge E},
-  publisher =     {INFORMS Journal on Computing},
-  title =         {{The Electric Vehicle Routing and Overnight Charging Scheduling Problem on a Multigraph}},
-  year =          {2024},
-  doi =           {10.1287/ijoc.2023.0404.cd},
-  url =           {https://github.com/INFORMSJoC/2023.0404},
-  note =          {Available for download at https://github.com/INFORMSJoC/2023.0404},
-}  
-```
-
 ## Description
 
 This repository provides the data for the problem (mE-VRSPTW) and the code for the solution method (a BPC algorithm). The main folders are `data`, `results`, and `src`.
