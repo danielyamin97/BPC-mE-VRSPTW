@@ -143,32 +143,32 @@ public final class BranchingRules extends AbstractBranchCreator<EVRPTW, Route, P
 
 		if(branchingOnVehicles) {
 			//Branch 1: number of vehicles down
-			BranchVehiclesDown branchingDecision1=new BranchVehiclesDown(this.pricingProblems.get(0), (int) Math.floor(vehiclesForBranching), parentNode.getInequalities());
+			BranchVehiclesDown branchingDecision1=new BranchVehiclesDown(this.pricingProblems.get(0), (int) Math.floor(vehiclesForBranching));
 			node1=this.createBranch(parentNode, branchingDecision1, parentNode.getInitialColumns(), parentNode.getInequalities());
 			//Branch 2: number of vehicles up
-			BranchVehiclesUp branchingDecision2=new BranchVehiclesUp(this.pricingProblems.get(0), (int) Math.ceil(vehiclesForBranching), parentNode.getInequalities());
+			BranchVehiclesUp branchingDecision2=new BranchVehiclesUp(this.pricingProblems.get(0), (int) Math.ceil(vehiclesForBranching));
 			node2=this.createBranch(parentNode, branchingDecision2, parentNode.getInitialColumns(), parentNode.getInequalities());
 		}else if(branchOnCustomerArcs){
 			//Branch 1: remove the edge:
-			RemoveArc branchingDecision1=new RemoveArc(this.pricingProblems.get(0), arcForBranching, dataModel, parentNode.getInequalities(), bestArcValue);
+			RemoveArc branchingDecision1=new RemoveArc(this.pricingProblems.get(0), arcForBranching, dataModel, bestArcValue);
 			node2=this.createBranch(parentNode, branchingDecision1, parentNode.getInitialColumns(), parentNode.getInequalities());
 			//Branch 2: fix the edge:
-			FixArc branchingDecision2=new FixArc(this.pricingProblems.get(0), arcForBranching, dataModel, parentNode.getInequalities(), bestArcValue);
+			FixArc branchingDecision2=new FixArc(this.pricingProblems.get(0), arcForBranching, dataModel, bestArcValue);
 			node1=this.createBranch(parentNode, branchingDecision2, parentNode.getInitialColumns(), parentNode.getInequalities());
 		}else {
 			if(branchOnInitialChargingTime) {
 				//Branch 1: remove the edge:
-				BranchInitialChargingTimeDown branchingDecision1= new BranchInitialChargingTimeDown(this.pricingProblems.get(0), (int) Math.floor(bestTimestepValue),parentNode.getInequalities(), this.timestepForBranching);
+				BranchInitialChargingTimeDown branchingDecision1= new BranchInitialChargingTimeDown(this.pricingProblems.get(0), (int) Math.floor(bestTimestepValue), this.timestepForBranching);
 				node2=this.createBranch(parentNode, branchingDecision1, parentNode.getInitialColumns(), parentNode.getInequalities());
 				//Branch 2: fix the edge:
-				BranchInitialChargingTimeUp branchingDecision2=new BranchInitialChargingTimeUp(this.pricingProblems.get(0), (int) Math.ceil(bestTimestepValue),parentNode.getInequalities(), this.timestepForBranching);
+				BranchInitialChargingTimeUp branchingDecision2=new BranchInitialChargingTimeUp(this.pricingProblems.get(0), (int) Math.ceil(bestTimestepValue), this.timestepForBranching);
 				node1=this.createBranch(parentNode, branchingDecision2, parentNode.getInitialColumns(), parentNode.getInequalities());
 			}else {
 				//Branch 1: remove the edge:
-				BranchEndChargingTimeDown branchingDecision1= new BranchEndChargingTimeDown(this.pricingProblems.get(0), (int) Math.floor(bestTimestepValue),parentNode.getInequalities(), this.timestepForBranching);
+				BranchEndChargingTimeDown branchingDecision1= new BranchEndChargingTimeDown(this.pricingProblems.get(0), (int) Math.floor(bestTimestepValue), this.timestepForBranching);
 				node2=this.createBranch(parentNode, branchingDecision1, parentNode.getInitialColumns(), parentNode.getInequalities());
 				//Branch 2: fix the edge:
-				BranchEndChargingTimeUp branchingDecision2=new BranchEndChargingTimeUp(this.pricingProblems.get(0), (int) Math.ceil(bestTimestepValue),parentNode.getInequalities(), this.timestepForBranching);
+				BranchEndChargingTimeUp branchingDecision2=new BranchEndChargingTimeUp(this.pricingProblems.get(0), (int) Math.ceil(bestTimestepValue), this.timestepForBranching);
 				node1=this.createBranch(parentNode, branchingDecision2, parentNode.getInitialColumns(), parentNode.getInequalities());
 			}
 		}

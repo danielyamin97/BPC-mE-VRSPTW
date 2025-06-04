@@ -15,18 +15,16 @@ public class BranchVehiclesDown  implements BranchingDecision<EVRPTW,Route> {
 	public final PricingProblem pricingProblem;				//pricing problem
 	public final int coefficient;							//RHS of the branching decision
 	public final NumberVehiclesInequalities inequality;		//inequality
-	public List<AbstractInequality> poolOfCuts;				//separated SRCs
 
 	/**
 	 * Constructor of the class
 	 * @param pricingProblem associated with this branching decision
 	 * @param coefficient of the branching constraint (must be an integer)
 	 */
-	public BranchVehiclesDown(PricingProblem pricingProblem, int coefficient, List<AbstractInequality> list){
+	public BranchVehiclesDown(PricingProblem pricingProblem, int coefficient){
 		this.pricingProblem=pricingProblem;
 		this.coefficient = coefficient;
 		this.inequality = new NumberVehiclesInequalities(coefficient, true);
-		this.poolOfCuts = list;
 	}
 
 	/**

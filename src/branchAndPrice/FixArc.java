@@ -19,16 +19,14 @@ public final class FixArc implements BranchingDecision<EVRPTW,Route> {
 	public final PricingProblem pricingProblem;				//pricing problem
 	public final int arc;									//arc on which we branch
 	public double flowValue;								//flow value of the arc on which we are branching
-	public List<AbstractInequality> poolOfCuts;				//separated SRCs
 	public EVRPTW dataModel;								//data model
 	public ArrayList<Integer> infeasibleArcs;				//infeasible arcs by the branching decision
 
 
-	public FixArc(PricingProblem pricingProblem, int arc, EVRPTW dataModel, List<AbstractInequality> list, double flowValue){
+	public FixArc(PricingProblem pricingProblem, int arc, EVRPTW dataModel, double flowValue){
 		this.pricingProblem=pricingProblem;
 		this.arc=arc;
 		this.dataModel = dataModel;
-		this.poolOfCuts = list;
 		this.infeasibleArcs = new ArrayList<Integer>();
 		this.flowValue = flowValue;
 

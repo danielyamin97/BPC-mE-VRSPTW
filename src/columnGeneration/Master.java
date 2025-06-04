@@ -373,51 +373,38 @@ public final class Master extends AbstractMaster<EVRPTW, Route, PricingProblem, 
 		// for simplicity, we simply destroy the master problem and rebuild it. Of course, something more sophisticated may be used which retains the master problem.
 		Set<NumberVehiclesInequalities> vehiclesInequalities = masterData.branchingNumberOfVehicles.keySet(); 	//keep branching decisions
 		Set<ChargingTimeInequality> chargingInequalities = masterData.branchingChargingTimes.keySet(); 			//keep branching decisions
+		Set<SubsetRowInequality> subsetRowInequalities = masterData.subsetRowInequalities.keySet();				//keep the SRCs
 
 		this.close(); 																							//close the old CPLEX model
 		masterData=this.buildModel(); 																			//create a new model without any columns
 		cutHandler.setMasterData(masterData); 																	//inform the cutHandler about the new master model
 		for(NumberVehiclesInequalities inequality: vehiclesInequalities) addBranchingOnVehichlesInequality(inequality);
 		for(ChargingTimeInequality inequality: chargingInequalities) addChargingTimeInequality(inequality);
-
+		for(SubsetRowInequality inequality : subsetRowInequalities) addCut(inequality);
 
 		if (bd instanceof BranchVehiclesDown) {
 			BranchVehiclesDown branching = (BranchVehiclesDown) bd;
 			addBranchingOnVehichlesInequality(branching.inequality);
-			for(AbstractInequality src: branching.poolOfCuts) addCut((SubsetRowInequality) src);
 		}
 		else if (bd instanceof BranchVehiclesUp) {
 			BranchVehiclesUp branching = (BranchVehiclesUp) bd;
 			addBranchingOnVehichlesInequality(branching.inequality);
-			for(AbstractInequality src: branching.poolOfCuts) addCut((SubsetRowInequality) src);
-		}
-		else if(bd instanceof FixArc) {
-			FixArc fixArcDecision = (FixArc) bd;
-			for(AbstractInequality src: fixArcDecision.poolOfCuts) addCut((SubsetRowInequality) src);
-		}
-		else if(bd instanceof RemoveArc) {
-			RemoveArc removeArcDecision= (RemoveArc) bd;
-			for(AbstractInequality src: removeArcDecision.poolOfCuts) addCut((SubsetRowInequality) src);
 		}
 		else if (bd instanceof BranchInitialChargingTimeDown) {
 			BranchInitialChargingTimeDown branching = (BranchInitialChargingTimeDown) bd;
 			addChargingTimeInequality(branching.inequality);
-			for(AbstractInequality src: branching.poolOfCuts) addCut((SubsetRowInequality) src);
 		}
 		else if (bd instanceof BranchInitialChargingTimeUp) {
 			BranchInitialChargingTimeUp branching = (BranchInitialChargingTimeUp) bd;
 			addChargingTimeInequality(branching.inequality);
-			for(AbstractInequality src: branching.poolOfCuts) addCut((SubsetRowInequality) src);
 		}
 		else if (bd instanceof BranchEndChargingTimeDown) {
 			BranchEndChargingTimeDown branching = (BranchEndChargingTimeDown) bd;
 			addChargingTimeInequality(branching.inequality);
-			for(AbstractInequality src: branching.poolOfCuts) addCut((SubsetRowInequality) src);
 		}
 		else if (bd instanceof BranchEndChargingTimeUp) {
 			BranchEndChargingTimeUp branching = (BranchEndChargingTimeUp) bd;
 			addChargingTimeInequality(branching.inequality);
-			for(AbstractInequality src: branching.poolOfCuts) addCut((SubsetRowInequality) src);
 		}
 	}
 

@@ -15,7 +15,6 @@ public class BranchInitialChargingTimeUp  implements BranchingDecision<EVRPTW,Ro
 	public final PricingProblem pricingProblem;				//pricing problem
 	public final int coefficient;							//RHS of the branching decision
 	public final ChargingTimeInequality inequality;			//inequality
-	public List<AbstractInequality> poolOfCuts;				//separated SRCs
 	public int timestep;									//timestep associated with the branching decision 
 
 	/**
@@ -23,11 +22,10 @@ public class BranchInitialChargingTimeUp  implements BranchingDecision<EVRPTW,Ro
 	 * @param pricingProblem associated with this branching decision
 	 * @param coefficient of the branching constraint (must be an integer)
 	 */
-	public BranchInitialChargingTimeUp(PricingProblem pricingProblem, int coefficient, List<AbstractInequality> list, int timestep){
+	public BranchInitialChargingTimeUp(PricingProblem pricingProblem, int coefficient, int timestep){
 		this.pricingProblem=pricingProblem;
 		this.coefficient = coefficient;
 		this.inequality = new ChargingTimeInequality(coefficient, false, timestep, true);
-		this.poolOfCuts = list;
 		this.timestep = timestep;
 	}
 
